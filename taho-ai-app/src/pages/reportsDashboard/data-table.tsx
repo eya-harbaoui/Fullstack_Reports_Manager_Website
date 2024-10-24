@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   ColumnDef,
   flexRender,
@@ -68,11 +68,6 @@ export function DataTable<TData, TValue>({
     },
   });
 
-  //store the current page while fetching for data changes 
-
-  useEffect(() => {
-    localStorage.setItem("currentPage", JSON.stringify(currentPage));
-  }, [currentPage]);
 
   const totalPages = table.getPageCount();
   const visiblePages = 5;

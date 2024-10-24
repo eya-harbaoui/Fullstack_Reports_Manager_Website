@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { Report, columns } from "./columns";
 import { DataTable } from "./data-table";
-import { Button } from "@/components/ui/button"; 
+import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -16,18 +16,16 @@ async function getData(): Promise<Report[]> {
     return [];
   }
 }
-
 //component
 export function DashBoardPage() {
   const [data, setData] = useState<Report[]>([]);
   const navigate = useNavigate();
-
+  const fetchData = async () => {
+    const result = await getData();
+    setData(result);
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      const result = await getData();
-      setData(result);
-    };
-    fetchData(); 
+    fetchData();
   }, []);
 
   return (
