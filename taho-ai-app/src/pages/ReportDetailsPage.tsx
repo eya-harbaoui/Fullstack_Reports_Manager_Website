@@ -1,16 +1,16 @@
+//imports
 import React, { useEffect, useState } from "react";
 import { useParams} from "react-router-dom";
 import axios from "axios";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 
-// Define the type for your report data
+// Define the type for report data
 interface ReportDetails {
   id: number;
   title: string;
@@ -24,14 +24,15 @@ interface ReportWithTopics {
   topics: any[]; // Assuming topics is an array; adjust type as needed
 }
 
-
+//component
 export const ReportDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>(); // Get the report ID from the URL
   const [reportWithTopics, setReportWithTopics] =
-    useState<ReportWithTopics | null>(null); // State to hold the report data
-  const [loading, setLoading] = useState<boolean>(true); // State to manage loading status
-  const [error, setError] = useState<string | null>(null); // State to handle errors
+    useState<ReportWithTopics | null>(null); 
+  const [loading, setLoading] = useState<boolean>(true); 
+  const [error, setError] = useState<string | null>(null); 
 
+// get the details of the selected report from backend
   const fetchReport = async () => {
     try {
       const response = await axios.get<ReportWithTopics>(
@@ -47,11 +48,8 @@ export const ReportDetails: React.FC = () => {
 
   useEffect(() => {
     fetchReport(); // Fetch the report when the component mounts or the ID changes
-  }, [id]); // Dependency array ensures the effect runs when `id` changes
+  }, [id]); 
 
-  useEffect(() => {
-    console.log("Report details:", reportWithTopics); // Log updated reportWithTopics
-  }, [reportWithTopics]); // This effect runs when reportWithTopics updates
 
   // Conditional rendering based on loading, error, or report data
   if (loading) return <div>Loading...</div>;

@@ -2,7 +2,7 @@ import pool from "../config/database";
 import { Report } from "./reportModel";
 import { Topic } from "./topicModel";
 
-// Get report info by ID with evaluations and topics
+// Get report info by ID with topics
 export const getReportInfoById = async (
   id: number
 ): Promise<{

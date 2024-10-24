@@ -26,20 +26,20 @@ import {
 } from "@/components/ui/pagination";
 import { useNavigate } from "react-router-dom";
 
+// Columns
 interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]; // Colonne du tableau
-  data: TData[]; // Données à afficher
-  pageSize?: number; // Taille de la page
-  onEdit: (id: number) => void; // Fonction pour modifier un rapport
-  onDelete: (id: number) => void; // Fonction pour supprimer un rapport
+  columns: ColumnDef<TData, TValue>[];
+  data: TData[];
+  pageSize?: number; 
+  onEdit: (id: number) => void; 
+  onDelete: (id: number) => void; 
 }
 
+//table and pagination
 export function DataTable<TData, TValue>({
   columns,
   data,
-  pageSize = 10,
-  onEdit,
-  onDelete,
+  pageSize = 6,
 }: DataTableProps<TData, TValue>) {
   const [currentPage, setCurrentPage] = useState(() => {
     const storedPage = localStorage.getItem("currentPage");
@@ -68,6 +68,8 @@ export function DataTable<TData, TValue>({
     },
   });
 
+  //store the current page while fetching for data changes 
+
   useEffect(() => {
     localStorage.setItem("currentPage", JSON.stringify(currentPage));
   }, [currentPage]);
@@ -92,6 +94,7 @@ export function DataTable<TData, TValue>({
 
     return pages;
   };
+  
 
   return (
     <div className="w-full">

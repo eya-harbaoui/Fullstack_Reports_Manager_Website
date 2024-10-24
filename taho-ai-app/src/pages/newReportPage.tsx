@@ -1,5 +1,5 @@
 "use client";
-
+//imports
 import React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -60,7 +60,7 @@ export const ReportForm: React.FC = () => {
       evaluation_status: undefined,
     },
   });
-
+// sending data to create new report
   const onSubmit = async (data: ReportFormInputs) => {
     try {
       const response = await fetch("http://localhost:8000/reports/new", {

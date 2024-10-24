@@ -5,6 +5,7 @@ import { DashBoardPage } from "./pages/reportsDashboard/reportsPageDashboard";
 import { ReportDetails } from "./pages/ReportDetailsPage";
 import { ReportForm } from "./pages/newReportPage";
 
+// Our final app using react router dom to place each component in the appropriate path
 const App: React.FC = () => {
   return (
     <Router>

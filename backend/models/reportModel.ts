@@ -27,7 +27,6 @@ export const createReport = async (report: Report): Promise<Report> => {
 
   const result = await pool.query(query, values);
 
-  // Assuming the returned row is in result.rows[0]
   return result.rows[0]; // Return the created report
 };
 
