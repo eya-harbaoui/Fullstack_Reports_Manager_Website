@@ -5,7 +5,7 @@ import {getReportInfoById} from "../models/reportInfo"
 // Create a new report
 export const createNewReport = async (req: Request, res: Response) => {
   try {
-    const report: Report = req.body; // Ensure your request body matches the Report interface
+    const report: Report = req.body;
     await createReport(report);
     res.status(201).json({ message: "Report created successfully." });
   } catch (error) {
