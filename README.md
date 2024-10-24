@@ -26,7 +26,9 @@ npm run dev
 ### Backend Setup
 1. **Create the Backend Project**
 mkdir backend
+
 cd backend
+
 npm init -y
 
 2. **Install TypeScript and Node.js Types:**
@@ -38,10 +40,16 @@ npx tsc --init
 npm install
 5. **Configuration:**
 Change the file .env based on your database config 
+
 DB_HOST = "localhost"
+
 DB_PORT = 5432
+
 DB_USERNAME = "username"
+
 DB_PASSWORD = "yourpassword"
+
 DB_NAME = "Taho_AI_Report_Management"
+
 6. **start the backend server** : 
 nodemon index.ts
