@@ -1,13 +1,13 @@
 //import packages
-import express from "express";
+import express, { Application } from "express";
 import { DBConnection } from "./config/database";
+import reportRoutes from "./routes/report.route"; // Chemin vers ton fichier routeur
 
-const app = express();
+const app: Application = express();
+app.use(express.json());
 const PORT = process.env.PORT || 8000;
 
-app.get("/", (req, res) => {
-  res.send("welcome to node js server !");
-});
+app.use("/reports", reportRoutes); 
 
 // verify Database connection when starting server
 const startServer = async () => {

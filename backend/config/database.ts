@@ -15,7 +15,7 @@ const pool = new Pool({
 });
 
 // function to verify that the database is connected
-export const DBConnection = async ():Promise<void> => {
+export const DBConnection = async (): Promise<void> => {
   try {
     await pool.query("SELECT 1");
     console.log("connected to database with success.");
@@ -27,7 +27,7 @@ export const DBConnection = async ():Promise<void> => {
   }
 };
 
-// function to create our tables 
+// function to create our tables
 const createTables = async (): Promise<void> => {
   const createReportsTable = `
     CREATE TABLE IF NOT EXISTS reports (
@@ -35,16 +35,8 @@ const createTables = async (): Promise<void> => {
         title VARCHAR(255) NOT NULL,
         summary TEXT NOT NULL,
         content TEXT NOT NULL,
-        evaluation VARCHAR(50) NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    );`;
-
-  const createEvaluationsTable = `
-    CREATE TABLE IF NOT EXISTS evaluations (
-        id SERIAL PRIMARY KEY,
-        report_id INT REFERENCES reports(id) ON DELETE CASCADE,
-        comments TEXT,
-        status VARCHAR(50) NOT NULL,
+        evaluation_status VARCHAR(50) NOT NULL,
+        reviewer_comments TEXT,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );`;
 
@@ -58,7 +50,6 @@ const createTables = async (): Promise<void> => {
 
   try {
     await pool.query(createReportsTable);
-    await pool.query(createEvaluationsTable);
     await pool.query(createTopicsTable);
     console.log("Tables created successfully!");
   } catch (err) {

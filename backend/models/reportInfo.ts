@@ -1,22 +1,19 @@
 import pool from "../config/database";
-import { Report } from "./reportModel"; 
-import { Evaluation} from "./evaluationModel"; 
-import { Topic } from "./topicModel"; 
+import { Report } from "./reportModel";
+import { Topic } from "./topicModel";
 
 // Get report info by ID with evaluations and topics
 export const getReportInfoById = async (
   id: number
 ): Promise<{
   report: Report | null;
-  evaluations: Evaluation[];
   topics: Topic[];
 } | null> => {
   const query = `
     SELECT r.*, e.*, t.*
     FROM reports r
-    LEFT JOIN evaluations e ON r.id = e.report_id
     LEFT JOIN topics t ON r.id = t.report_id
-    WHERE r.id = $1
+    WHERE r.id = $1ss
   `;
 
   const result = await pool.query(query, [id]);
@@ -25,27 +22,18 @@ export const getReportInfoById = async (
     return null; // Report not found
   }
   // Populate report, evaluations, and topics
-  const evaluations: Evaluation[] = [];
   const topics: Topic[] = [];
   const report: Report = {
     id: result.rows[0].id,
     title: result.rows[0].title,
     summary: result.rows[0].summary,
     content: result.rows[0].content,
-    evaluation: result.rows[0].evaluation,
+    evaluation_status: result.rows[0].evaluation_status,
+    reviewer_comments: result.rows[0].reviewer_comments,
     created_at: result.rows[0].created_at,
   };
 
   for (const row of result.rows) {
-    if (row.evaluation) {
-      evaluations.push({
-        id: row.evaluation_id,
-        report_id: row.report_id,
-        comments: row.comments,
-        status: row.status,
-        created_at: row.created_at,
-      });
-    }
     if (row.topic) {
       topics.push({
         id: row.topic_id,
@@ -56,5 +44,5 @@ export const getReportInfoById = async (
     }
   }
 
-  return { report, evaluations, topics };
+  return { report, topics };
 };

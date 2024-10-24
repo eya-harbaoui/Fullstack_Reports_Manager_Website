@@ -8,12 +8,12 @@ import {
 const router = Router();
 
 // Route to create a report
-router.post("/reports/new", createNewReport);
+router.post("/new", createNewReport);
 
 // Route to get all reports
-router.get("/reports", getAllReports);
+router.get("/", getAllReports);
 
 // Route to get report infos by ID
-router.get("/reports/:id", getReportDetails);
+router.get("/:id", getReportDetails);
 
 export default router;

@@ -2,24 +2,26 @@ import pool from "../config/database";
 
 // Report interface
 export interface Report {
-  id?: number; 
+  id?: number;
   title: string;
   summary: string;
   content: string;
-  evaluation: string;
-  created_at?: Date; 
+  evaluation_status: string;
+  reviewer_comments:string;
+  created_at?: Date;
 }
 // CRUD Report 
 // create a new report
 export const createReport = async (report: Report): Promise<void> => {
   const query = `
-    INSERT INTO reports (title, summary, content, evaluation)
-    VALUES ($1, $2, $3, $4) RETURNING *`;
+    INSERT INTO reports (title, summary, content, evaluation_status,reviewer_comments)
+    VALUES ($1, $2, $3, $4, $5) RETURNING *`;
   const values = [
     report.title,
     report.summary,
     report.content,
-    report.evaluation,
+    report.evaluation_status,
+    report.reviewer_comments,
   ];
   await pool.query(query, values);
 };
@@ -45,13 +47,14 @@ export const updateReport = async (
 ): Promise<void> => {
   const query = `
     UPDATE reports
-    SET title = $1, summary = $2, content = $3, evaluation = $4
-    WHERE id = $5`;
+    SET title = $1, summary = $2, content = $3, evaluation_status = $4, reviewer_comments = $5
+    WHERE id = $6`;
   const values = [
     report.title,
     report.summary,
     report.content,
-    report.evaluation,
+    report.evaluation_status,
+    report.reviewer_comments,
     id,
   ];
   await pool.query(query, values);
