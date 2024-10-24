@@ -7,7 +7,6 @@ import {
   useReactTable,
   getPaginationRowModel,
 } from "@tanstack/react-table";
-
 import {
   Table,
   TableBody,
@@ -17,6 +16,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -33,6 +33,8 @@ export function DataTable<TData, TValue>({
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   });
+
+  const navigate = useNavigate(); // Initialize useNavigate
 
   return (
     <div>
@@ -62,6 +64,8 @@ export function DataTable<TData, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  onClick={() => navigate(`/report/${row.original.id}`)} 
+                  style={{ cursor: "pointer" }} 
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>

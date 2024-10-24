@@ -28,7 +28,7 @@ export const createReport = async (report: Report): Promise<void> => {
 
 // get all reports
 export const getReports = async (): Promise<Report[]> => {
-  const query = `SELECT * FROM reports`;
+  const query = `SELECT id,title,summary,evaluation_status FROM reports`;
   const result = await pool.query(query);
   return result.rows; 
 };

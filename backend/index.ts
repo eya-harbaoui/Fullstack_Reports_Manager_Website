@@ -1,14 +1,14 @@
 //import packages
 import express, { Application } from "express";
 import { DBConnection } from "./config/database";
-import reportRoutes from "./routes/report.route"; // Chemin vers ton fichier routeur
-
+import reportRoutes from "./routes/report.route";
+import cors from "cors";
 const app: Application = express();
 app.use(express.json());
+app.use(cors());
 const PORT = process.env.PORT || 8000;
 
-app.use("/reports", reportRoutes); 
-
+app.use("/reports", reportRoutes);
 // verify Database connection when starting server
 const startServer = async () => {
   try {
