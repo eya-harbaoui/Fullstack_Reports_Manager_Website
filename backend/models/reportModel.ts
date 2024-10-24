@@ -12,10 +12,11 @@ export interface Report {
 }
 // CRUD Report 
 // create a new report
-export const createReport = async (report: Report): Promise<void> => {
+export const createReport = async (report: Report): Promise<Report> => {
   const query = `
-    INSERT INTO reports (title, summary, content, evaluation_status,reviewer_comments)
+    INSERT INTO reports (title, summary, content, evaluation_status, reviewer_comments)
     VALUES ($1, $2, $3, $4, $5) RETURNING *`;
+
   const values = [
     report.title,
     report.summary,
@@ -23,7 +24,11 @@ export const createReport = async (report: Report): Promise<void> => {
     report.evaluation_status,
     report.reviewer_comments,
   ];
-  await pool.query(query, values);
+
+  const result = await pool.query(query, values);
+
+  // Assuming the returned row is in result.rows[0]
+  return result.rows[0]; // Return the created report
 };
 
 // get all reports

@@ -14,7 +14,7 @@ export const getReportInfoById = async (
   }
 
   const query = `
-    SELECT r.id, r.title, r.content, r.reviewer_comments, t.id AS topic_id, t.topic 
+    SELECT r.id, r.title, r.content, r.reviewer_comments,r.evaluation_status, t.id AS topic_id, t.topic 
     FROM reports r
     LEFT JOIN topics t ON r.id = t.report_id
     WHERE r.id = $1

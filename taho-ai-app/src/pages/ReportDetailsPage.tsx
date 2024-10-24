@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams} from "react-router-dom";
 import axios from "axios";
 import {
   Card,
@@ -15,13 +15,15 @@ interface ReportDetails {
   id: number;
   title: string;
   content: string;
-  reviewer_comments: string; // Ensure this matches the API response
+  reviewer_comments: string;
+  evaluation_status: "Passed" | "Failed" | "Needs Review";
 }
 
 interface ReportWithTopics {
   report: ReportDetails; // The report object
   topics: any[]; // Assuming topics is an array; adjust type as needed
 }
+
 
 export const ReportDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>(); // Get the report ID from the URL
@@ -65,18 +67,32 @@ export const ReportDetails: React.FC = () => {
           </CardHeader>
           <CardContent>
             <div className="mb-4 text-left">
-              <strong>Content</strong>
+              <strong className="mb-4">Content</strong>
               <p>{reportWithTopics.report.content}</p>
             </div>
-
             <div className="mb-4 text-left">
-              <strong>Reviewer Comments</strong>
+              <strong className="mb-4">Evaluation Status</strong>
+              <p
+                className={`font-bold ${
+                  reportWithTopics.report.evaluation_status === "Failed"
+                    ? "text-red-500" // Red for failed
+                    : reportWithTopics.report.evaluation_status === "Passed"
+                    ? "text-green-500" // Green for passed
+                    : reportWithTopics.report.evaluation_status ===
+                      "Needs Review"
+                    ? "text-orange-500"
+                    : "text-gray-500"
+                }`}
+              >
+                {reportWithTopics.report.evaluation_status}
+              </p>
+            </div>
+            <div className="mb-4 text-left">
+              <strong className="mb-4">Reviewer Comments</strong>
               <p>{reportWithTopics.report.reviewer_comments}</p>
             </div>
           </CardContent>
-          <CardFooter>
-            <p>Card Footer</p>
-          </CardFooter>
+          <CardFooter></CardFooter>
         </Card>
       ) : (
         <p>No report found.</p>
